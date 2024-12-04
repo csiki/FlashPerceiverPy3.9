@@ -132,7 +132,7 @@ class PerceiverBase(nn.Module):
     def __init__(
         self,
         *,
-        input_dim: List[int] | int,
+        input_dim,
         depth: int,
         num_latents: Optional[int] = 512,
         latent_dim: int = 512,
@@ -148,7 +148,7 @@ class PerceiverBase(nn.Module):
         weight_tie_layers: bool = False,
         gated_mlp: bool = True,
         self_per_cross_attn: int = 1,
-        num_zero_tokens: int | None = None,
+        num_zero_tokens = None,
         use_flash_attn: bool = True,
     ):
         super().__init__()
@@ -269,7 +269,7 @@ class PerceiverBase(nn.Module):
     def num_cross_attention_layers(self):
         return self.depth
     
-    def _validate_data(self, data: List[T] | T, mask: List[T] | T | None = None):
+    def _validate_data(self, data, mask = None):
         if isinstance(data, T):
             data = [data] * self.depth
             mask = [mask] * self.depth
@@ -292,9 +292,9 @@ class PerceiverBase(nn.Module):
 
     def forward(
         self,
-        data: List[T] | T,
-        mask: List[T] | T | None = None,
-        latents: T | None = None,
+        data,
+        mask = None,
+        latents = None,
         return_attn_weights: bool = False
     ):
         """
@@ -469,9 +469,9 @@ class Perceiver(PerceiverBase):
     def __init__(
         self,
         *,
-        input_dim: List[int] | int,
+        input_dim,
         depth: int,
-        output_dim: int | None = None,
+        output_dim = None,
         output_mode: Literal['average', 'concat', 'first'] = 'average',
         num_latents: Optional[int] = 512,
         latent_dim: int = 512,
@@ -487,7 +487,7 @@ class Perceiver(PerceiverBase):
         weight_tie_layers: bool = False,
         gated_mlp: bool = True,
         self_per_cross_attn: int = 1,
-        num_zero_tokens: int | None = None,
+        num_zero_tokens = None,
         use_flash_attn: bool = True,
     ):
         if latent_drop > 0 and output_mode == 'concat':
@@ -534,9 +534,9 @@ class Perceiver(PerceiverBase):
     
     def forward(
         self,
-        data: List[T] | T,
-        mask: List[T] | T | None = None,
-        latents: T | None = None,
+        data,
+        mask = None,
+        latents = None,
         return_embeddings: bool = False,
         return_attn_weights: bool = False
     ):
@@ -637,10 +637,10 @@ class PerceiverIO(PerceiverBase):
     def __init__(
         self,
         *,
-        input_dim: List[int] | int,
+        input_dim,
         query_dim: int,
         depth: int,
-        proj_dim: int | None = None,
+        proj_dim = None,
         num_latents: Optional[int] = 512,
         latent_dim: int = 512,
         cross_heads: int = 1,
@@ -658,7 +658,7 @@ class PerceiverIO(PerceiverBase):
         query_attn_dropout: float = 0.0,
         weight_tie_layers: bool = False,
         gated_mlp: bool = True,
-        num_zero_tokens: int | None = None,
+        num_zero_tokens = None,
         use_flash_attn: bool = True,
     ):
         super().__init__(
@@ -711,11 +711,11 @@ class PerceiverIO(PerceiverBase):
     
     def forward(
         self,
-        data: List[T] | T,
-        mask: List[T] | T | None = None,
-        latents: T | None = None,
-        queries: T | None = None,
-        query_mask: T | None = None,
+        data,
+        mask = None,
+        latents = None,
+        queries = None,
+        query_mask = None,
         return_attn_weights: bool = False
     ):
         """
