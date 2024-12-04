@@ -37,7 +37,7 @@ def numel(m: nn.Module, only_trainable: bool = True):
     return sum(p.numel() for p in m.parameters() if not only_trainable or p.requires_grad)
 
 
-def meshgrid(*size: int, batch_size: int | None = None):
+def meshgrid(*size: int, batch_size = None):
     tensors = [torch.linspace(-1, 1, n) for n in size]
     grid = torch.stack(
         torch.meshgrid(tensors, indexing='ij'), -1
