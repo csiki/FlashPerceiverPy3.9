@@ -29,8 +29,8 @@ class ImageAdapter(nn.Module):
         self,
         embed_dim: int,
         num_channels: int = 3,
-        pos_encoding: BasePositionalEncoding | None = None,
-        patch_size: int | tuple[int, int ] | None = None,
+        pos_encoding = None,
+        patch_size = None,
         channel_first: bool = True
     ):
         super().__init__()
