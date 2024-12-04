@@ -37,3 +37,6 @@ priority = "explicit"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.setuptools_scm]
+write_to = "flash_perceiver/_version.py"
